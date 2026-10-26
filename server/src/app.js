@@ -8,6 +8,8 @@ import rateLimit from 'express-rate-limit';
 import { env } from './config/env.js';
 import { notFound, errorHandler } from './middleware/error.js';
 import authRoutes from './modules/auth/auth.routes.js';
+import categoryRoutes from './modules/categories/category.routes.js';
+import productRoutes from './modules/products/product.routes.js';
 const app = express();
 app.set('trust proxy', 1); // required behind Render's proxy for rate limiting + secure cookies
 
@@ -25,7 +27,8 @@ app.get('/api/health', (req, res) => res.json({ success: true, data: { status: '
 
 // modules get mounted here as we build them:
 app.use('/api/auth', authRoutes);
-
+app.use('/api/categories', categoryRoutes);
+app.use('/api/products', productRoutes);
 app.use(notFound);
 app.use(errorHandler);
 export default app;

@@ -7,6 +7,8 @@ const schema = z.object({
     MONGO_URI: z.string().min(1),
     JWT_SECRET: z.string().min(16),
     CLIENT_URL: z.url(),
+    SEED_ADMIN_EMAIL: z.email().optional(),
+    SEED_ADMIN_PASSWORD: z.string().min(8).optional(),
 });
 
 const parsed = schema.safeParse(process.env);
