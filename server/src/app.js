@@ -7,7 +7,7 @@ import mongoSanitize from 'express-mongo-sanitize';
 import rateLimit from 'express-rate-limit';
 import { env } from './config/env.js';
 import { notFound, errorHandler } from './middleware/error.js';
-
+import authRoutes from './modules/auth/auth.routes.js';
 const app = express();
 app.set('trust proxy', 1); // required behind Render's proxy for rate limiting + secure cookies
 
@@ -24,7 +24,7 @@ app.use('/api', rateLimit({ windowMs: 15 * 60 * 1000, limit: 300 }));
 app.get('/api/health', (req, res) => res.json({ success: true, data: { status: 'ok' } }));
 
 // modules get mounted here as we build them:
-// app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
